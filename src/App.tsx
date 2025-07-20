@@ -1,61 +1,44 @@
 // src/App.tsx
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { generate, downloadSVG, downloadPNG } from './utils/mandala'
+import { ContactBlock } from './components/ContactBlock'
+import { MandalaControls } from './components/MandalaControls'
+import AboutSection from './components/AboutSection'
+import { useResponsiveSvg } from './hooks/useResponsiveSvg'
 
-type ContactData = {
-  email: string
-  discord: string
-  x: string[]
-  demo_render: string
-}
 
 function App() {
-  const [data, setData] = useState<ContactData | null>(null)
+  const svgRef = useRef<HTMLDivElement>(null)
+  const [hashBits, setHashBits] = useState<256 | 160>(256)
+  useResponsiveSvg(svgRef)
 
   useEffect(() => {
-    fetch('https://datasattva.github.io/hashjing-res/res.json')
-      .then(res => res.json())
-      .then(setData)
-      .catch(err => console.error('Error loading contacts:', err))
-  }, [])
+    generate({ svgRef, bits: hashBits })
+  }, [hashBits])
 
   return (
     <>
-      <div id="title">
-        <div>HashJing Live Demo</div>
+      <div id="title">HashJing Demo</div>
+
+      <div id="about-link">
+        <a href="#about">About HashJing Project</a>
       </div>
 
-      <main id="main-section">
-        <div className="preview-container">
-          {data ? (
-            <div id="preview-section">
-              <div className="section-title">Contacts</div>
-              <p><strong>Email:</strong> <a href={`mailto:${data.email}`}>{data.email}</a></p>
-              <p><strong>Discord:</strong> {data.discord}</p>
-              <div>
-                <strong>X (Twitter):</strong>
-                <ul>
-                  {data.x.map(x => (
-                    <li key={x}>{x}</li>
-                  ))}
-                </ul>
-              </div>
+      <div id="svg-container" ref={svgRef}></div>
 
-            </div>
-          ) : (
-            <p className="status">Loading contacts...</p>
-          )}
-        </div>
-        <div className="preview-container">
-          {data ? (
-            <div id="preview-section">
-              <div className="section-title">Resources</div>
-              <p><strong>Live Demo:</strong> <a href={data.demo_render} target="_blank">{data.demo_render}</a></p>
-            </div>
-          ) : (
-            <p className="status">Loading contacts...</p>
-          )}
-        </div>
-      </main>
+      <div id="download-buttons">
+        <button onClick={downloadSVG}>Download SVG</button>
+        <button onClick={downloadPNG}>Download PNG</button>
+      </div>
+
+      <MandalaControls hashBits={hashBits} setHashBits={setHashBits} svgRef={svgRef} />
+
+      <div id="features">
+        <h2 className="section-title">Features of Order</h2>
+        <div id="features-content" className="controls"></div>
+      </div>
+      <AboutSection />
+      <ContactBlock />
     </>
   )
 }
