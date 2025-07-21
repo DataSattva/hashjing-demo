@@ -43,13 +43,6 @@ export default function AboutSection() {
               and detects rare “sealed” configurations where no such path exists.
             </li>
           </ul>
-  
-          <p>
-            For full mathematical and conceptual details, see the{' '}
-            <a href="https://github.com/DataSattva/hashjing/blob/main/WhitePaper.ipynb" target="_blank" rel="noreferrer">
-              WhitePaper
-            </a>.
-          </p>
         </div>
       </div>
     )
