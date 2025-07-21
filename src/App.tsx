@@ -12,16 +12,6 @@ function App() {
   const [hashBits, setHashBits] = useState<256 | 160>(256)
   useResponsiveSvg(svgRef)
 
-  // Google Analytics setup
-  useEffect(() => {
-    window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-LBT8NYF4P7');
-  }, []);
-
   useEffect(() => {
     generate({ svgRef, bits: hashBits })
   }, [hashBits])
