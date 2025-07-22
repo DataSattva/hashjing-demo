@@ -20,15 +20,17 @@ This repository contains an interactive page that renders SHA hashes as radial m
 - Live version: [datasattva.github.io/hashjing-demo](https://datasattva.github.io/hashjing-demo/)
     
 
-## License
+## Contributing
 
-- Code: MIT
-- Visuals: CC BY-NC 4.0
-
-## Dev setup
+Developer setup and contribution guidelines are in
 https://github.com/DataSattva/hashjing-demo/blob/main/CONTRIBUTING.md
 
 ## Contacts and Resources
 
 For a detailed list of HashJing contacts and resources, see the page [Contacts and Resources](https://datasattva.github.io/hashjing-res/)
+
+## License
+
+- Code: MIT
+- Visuals: CC BY-NC 4.0
     

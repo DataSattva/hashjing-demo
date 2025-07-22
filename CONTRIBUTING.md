@@ -1,4 +1,4 @@
-# HashJing Demo
+# CONTRIBUTING
 
 ## Local Development
 
