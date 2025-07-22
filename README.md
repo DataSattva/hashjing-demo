@@ -14,18 +14,6 @@ This repository contains an interactive page that renders SHA hashes as radial m
 - Download as SVG or PNG
 - Responsive layout
 
-## Local Development
-
-```bash
-npm install
-npm run dev
-```
-Open in browser:
-```
-http://localhost:5175/hashjing-demo/
-
-```
-
 ## Documentation
 
 - White paper: [WhitePaper.ipynb](https://github.com/DataSattva/hashjing/blob/main/WhitePaper.ipynb)
@@ -36,6 +24,9 @@ http://localhost:5175/hashjing-demo/
 
 - Code: MIT
 - Visuals: CC BY-NC 4.0
+
+## Dev setup
+https://github.com/DataSattva/hashjing-demo/blob/main/CONTRIBUTING.md
 
 ## Contacts and Resources
 
