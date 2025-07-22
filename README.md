@@ -36,4 +36,8 @@ http://localhost:5175/hashjing-demo/
 
 - Code: MIT
 - Visuals: CC BY-NC 4.0
+
+## Contacts and Resources
+
+For a detailed list of HashJing contacts and resources, see the page [Contacts and Resources](https://datasattva.github.io/hashjing-res/)
     
