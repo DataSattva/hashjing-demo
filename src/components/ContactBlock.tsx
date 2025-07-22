@@ -7,7 +7,7 @@ export const ContactBlock = () => {
     <>
       {/* ------------- CONTACTS ------------- */}
       <section id="contacts">
-        <h2 className="section-title">Contacts and resources</h2>
+        <h2 className="section-title">Contacts and Resources</h2>
         <div id="contacts-content">
           <p>
             For a detailed list of HashJing contacts and resources, see the page&nbsp;
