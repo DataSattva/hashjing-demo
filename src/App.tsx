@@ -1,23 +1,30 @@
 // src/App.tsx
-import { useEffect, useRef, useState } from 'react'
-import { generate, downloadSVG, downloadPNG } from './utils/mandala'
-import { ContactBlock } from './components/ContactBlock'
-import { MandalaControls } from './components/MandalaControls'
-import AboutSection from './components/AboutSection'
-import { useResponsiveSvg } from './hooks/useResponsiveSvg'
+import { useEffect, useRef, useState } from 'react';
+import { generate, downloadSVG, downloadPNG } from './utils/mandala';
+import { ContactBlock } from './components/ContactBlock';
+import { MandalaControls } from './components/MandalaControls';
+import AboutSection from './components/AboutSection';
+import { useResponsiveSvg } from './hooks/useResponsiveSvg';
 import FeaturesSection from './components/FeaturesSection';
 
 
 function App() {
   const svgRef = useRef<HTMLDivElement>(null);
   const [hashBits, setHashBits] = useState<256 | 160>(256);
-  const [currentHex, setCurrentHex] = useState('')
+  const [currentHex, setCurrentHex] = useState('');
+  const statusRef = useRef<HTMLDivElement>(null);
+
   useResponsiveSvg(svgRef);
 
   useEffect(() => {
-    generate({ svgRef, bits: hashBits, onHex: setCurrentHex });
-  }, [hashBits]);
-
+    generate({
+      svgRef,
+      bits: hashBits,  
+      statusRef,   
+      onHex: setCurrentHex,
+    });
+  }, []);
+  
   return (
     <>
       <div id="title">HashJing Demo</div>
@@ -38,6 +45,7 @@ function App() {
         hashBits={hashBits}
         setHashBits={setHashBits}
         setCurrentHex={setCurrentHex}
+        statusRef={statusRef}
       />
       <FeaturesSection hex={currentHex} bits={hashBits} />
       <AboutSection />

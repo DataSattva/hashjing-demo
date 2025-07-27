@@ -1,18 +1,19 @@
 // src/components/MandalaControls.tsx
 
-import { generate } from '../utils/mandala'
+import { generate } from '../utils/mandala';
 import {
   Dispatch,
   RefObject,
   SetStateAction,
   useRef,
-} from 'react'
+} from 'react';
 
 interface Props {
-  svgRef: RefObject<HTMLDivElement>
-  hashBits: 256 | 160
-  setHashBits: Dispatch<SetStateAction<256 | 160>>
-  setCurrentHex: Dispatch<SetStateAction<string>>
+  svgRef: RefObject<HTMLDivElement>;
+  hashBits: 256 | 160;
+  setHashBits: Dispatch<SetStateAction<256 | 160>>;
+  setCurrentHex: Dispatch<SetStateAction<string>>;
+  statusRef?: RefObject<HTMLDivElement>; // optional: shared from App
 }
 
 export function MandalaControls({
@@ -20,28 +21,31 @@ export function MandalaControls({
   hashBits,
   setHashBits,
   setCurrentHex,
+  statusRef,
 }: Props) {
-  const hashInputRef = useRef<HTMLInputElement>(null)
-  const textInputRef = useRef<HTMLTextAreaElement>(null)
-  const statusRef = useRef<HTMLDivElement>(null)
+  const hashInputRef = useRef<HTMLInputElement>(null);
+  const textInputRef = useRef<HTMLTextAreaElement>(null);
 
-  /* single helper so we can reuse for button click and radio switch */
+  // create local fallback if parent did not supply one
+  const localStatusRef = useRef<HTMLDivElement>(null);
+  const effectiveStatusRef = statusRef ?? localStatusRef;
+
   const runGenerate = (bits: 256 | 160) =>
     generate({
       svgRef,
       bits,
       hashInputRef,
       textInputRef,
-      statusRef,
+      statusRef: effectiveStatusRef,
       onHex: setCurrentHex,
-    })
+    });
 
-  const handleGenerate = () => runGenerate(hashBits)
+  const handleGenerate = () => runGenerate(hashBits);
 
   const handleBitsChange = (bits: 256 | 160) => {
-    setHashBits(bits) // update global state (re‑render App)
-    runGenerate(bits) // immediately refresh mandala + status
-  }
+    setHashBits(bits);
+    runGenerate(bits);
+  };
 
   return (
     <div id="mandala-section">
@@ -51,9 +55,7 @@ export function MandalaControls({
           ref={hashInputRef}
           placeholder="Enter 0x... custom hash (64 hex chars)"
           onChange={() => {
-            if (hashInputRef.current?.value.trim()) {
-              textInputRef.current!.value = ''
-            }
+            if (hashInputRef.current?.value.trim()) textInputRef.current!.value = '';
           }}
         />
 
@@ -62,9 +64,7 @@ export function MandalaControls({
           placeholder="Or enter text to hash..."
           rows={3}
           onChange={() => {
-            if (textInputRef.current?.value.trim()) {
-              hashInputRef.current!.value = ''
-            }
+            if (textInputRef.current?.value.trim()) hashInputRef.current!.value = '';
           }}
         />
 
@@ -92,14 +92,13 @@ export function MandalaControls({
           </label>
         </div>
 
-        <div ref={statusRef} id="status" className="status" />
+        <div ref={effectiveStatusRef} id="status" className="status" />
         <button onClick={handleGenerate} className="wide-button green-button">
           Generate
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-// keep default export for legacy imports
 export default MandalaControls;
