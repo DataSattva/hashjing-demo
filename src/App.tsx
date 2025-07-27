@@ -5,16 +5,18 @@ import { ContactBlock } from './components/ContactBlock'
 import { MandalaControls } from './components/MandalaControls'
 import AboutSection from './components/AboutSection'
 import { useResponsiveSvg } from './hooks/useResponsiveSvg'
+import FeaturesSection from './components/FeaturesSection';
 
 
 function App() {
-  const svgRef = useRef<HTMLDivElement>(null)
-  const [hashBits, setHashBits] = useState<256 | 160>(256)
-  useResponsiveSvg(svgRef)
+  const svgRef = useRef<HTMLDivElement>(null);
+  const [hashBits, setHashBits] = useState<256 | 160>(256);
+  const [currentHex, setCurrentHex] = useState('')
+  useResponsiveSvg(svgRef);
 
   useEffect(() => {
-    generate({ svgRef, bits: hashBits })
-  }, [hashBits])
+    generate({ svgRef, bits: hashBits, onHex: setCurrentHex });
+  }, [hashBits]);
 
   return (
     <>
@@ -31,12 +33,13 @@ function App() {
         <button onClick={downloadPNG}>Download PNG</button>
       </div>
 
-      <MandalaControls hashBits={hashBits} setHashBits={setHashBits} svgRef={svgRef} />
-
-      <div id="features">
-        <h2 className="section-title">Features of Order</h2>
-        <div id="features-content" className="controls"></div>
-      </div>
+      <MandalaControls
+        svgRef={svgRef}
+        hashBits={hashBits}
+        setHashBits={setHashBits}
+        setCurrentHex={setCurrentHex}
+      />
+      <FeaturesSection hex={currentHex} bits={hashBits} />
       <AboutSection />
       <ContactBlock />
     </>

@@ -1,21 +1,28 @@
 // src/components/MandalaControls.tsx
-import { useRef } from 'react'
 import { generate } from '../utils/mandala'
+import { Dispatch, RefObject, SetStateAction, useRef } from 'react'
 
 interface Props {
+  svgRef: RefObject<HTMLDivElement>
   hashBits: 256 | 160
-  setHashBits: (bits: 256 | 160) => void
-  svgRef: React.RefObject<HTMLDivElement>
+  setHashBits: Dispatch<SetStateAction<256 | 160>>
+  setCurrentHex: Dispatch<SetStateAction<string>> 
 }
 
-export const MandalaControls = ({ hashBits, setHashBits, svgRef }: Props) => {
+export function MandalaControls({ svgRef, hashBits, setHashBits, setCurrentHex }: Props) {
   const hashInputRef = useRef<HTMLInputElement>(null)
   const textInputRef = useRef<HTMLTextAreaElement>(null)
   const statusRef = useRef<HTMLDivElement>(null)
 
-  const handleGenerate = () => {
-    generate({ svgRef, bits: hashBits, hashInputRef, textInputRef, statusRef })
-  }
+  const handleGenerate = () =>
+    generate({
+      svgRef,
+      bits: hashBits,
+      hashInputRef,
+      textInputRef,
+      statusRef,
+      onHex: setCurrentHex 
+    })
 
   return (
     <div id="mandala-section">

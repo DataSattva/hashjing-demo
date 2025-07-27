@@ -6,15 +6,14 @@ interface GenerateOptions {
     hashInputRef?: React.RefObject<HTMLInputElement>
     textInputRef?: React.RefObject<HTMLTextAreaElement>
     statusRef?: React.RefObject<HTMLDivElement>
+    onHex?: (hex: string) => void;
   }
-
-  import { renderFeatures } from './features'
   
-  export function generate({ svgRef, bits, hashInputRef, textInputRef, statusRef }: GenerateOptions) {
+  export function generate({ svgRef, bits, hashInputRef, textInputRef, statusRef, onHex }: GenerateOptions) {
     const hex = resolveInput(bits, hashInputRef, textInputRef, statusRef)
     if (!hex) return
-    drawMandala(hex, bits, svgRef)
-    renderFeatures(hex, bits)
+    drawMandala(hex, bits, svgRef);
+    onHex?.(hex); 
   }
   
   function resolveInput(
@@ -45,7 +44,6 @@ interface GenerateOptions {
         hex = '0x' + hexFull.slice(-expectedLength)
         setStatus(`Text input → SHA-256 → ${hex}`, 'green')
         drawMandala(hex, bits, svgRef!)
-        renderFeatures(hex, bits)
       })
       return null
     } else if (isValidHash) {
