@@ -1,5 +1,5 @@
 // src/components/FeaturesSection.tsx
-// Displays Balanced & Passages traits with rarity; aware of 256‑ vs 160‑bit mode.
+// Displays Balanced & Passages traits with rarity and shows the raw source hash.
 
 import { isBalanced, countPassages } from '../utils/featureAnalysis';
 import { getRarityStars } from '../utils/rarity';
@@ -53,6 +53,10 @@ export default function FeaturesSection({ hex, bits }: Props) {
             )}
             <br />
             {passageDesc}
+          </li>
+
+          <li>
+            <strong>Source hash:</strong> {hex}
           </li>
         </ul>
       </div>
