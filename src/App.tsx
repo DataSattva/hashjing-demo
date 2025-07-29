@@ -79,7 +79,6 @@ function App() {
           textInputRef={textInputRef}
           onGenerate={handleGenerate}
         />
-  
         <FeaturesSection hex={currentHex} bits={hashBits} />
         <IncludesSection />
         <AboutSection />

@@ -112,7 +112,7 @@ export function MandalaControls({
 
       <Button
         onClick={onGenerate}
-        className="w-full py-7 text-base font-semibold bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+        className="rounded-none w-full py-7 text-base font-semibold bg-green-600 hover:bg-green-700 text-white cursor-pointer"
       >
         Generate Mandala
       </Button>
