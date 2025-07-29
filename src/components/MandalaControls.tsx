@@ -7,14 +7,19 @@ import {
   SetStateAction,
   useRef,
 } from 'react';
+import { Button } from "@/components/ui/button";
 
 interface Props {
   svgRef: RefObject<HTMLDivElement>;
   hashBits: 256 | 160;
   setHashBits: Dispatch<SetStateAction<256 | 160>>;
   setCurrentHex: Dispatch<SetStateAction<string>>;
-  statusRef?: RefObject<HTMLDivElement>; // optional: shared from App
+  statusRef: RefObject<HTMLDivElement>;
+  hashInputRef: RefObject<HTMLInputElement>;
+  textInputRef: RefObject<HTMLTextAreaElement>;
+  onGenerate: () => void;
 }
+
 
 export function MandalaControls({
   svgRef,
@@ -22,9 +27,10 @@ export function MandalaControls({
   setHashBits,
   setCurrentHex,
   statusRef,
+  hashInputRef,
+  textInputRef,
+  onGenerate,
 }: Props) {
-  const hashInputRef = useRef<HTMLInputElement>(null);
-  const textInputRef = useRef<HTMLTextAreaElement>(null);
 
   // create local fallback if parent did not supply one
   const localStatusRef = useRef<HTMLDivElement>(null);
@@ -40,64 +46,77 @@ export function MandalaControls({
       onHex: setCurrentHex,
     });
 
-  const handleGenerate = () => runGenerate(hashBits);
-
   const handleBitsChange = (bits: 256 | 160) => {
     setHashBits(bits);
     runGenerate(bits);
   };
 
   return (
-    <div id="mandala-section">
-      <h2 className="section-title">Generate Mandala</h2>
-      <div id="mandala-controls" className="controls">
-        <input
-          ref={hashInputRef}
-          placeholder="Enter 0x... custom hash (64 hex chars)"
-          onChange={() => {
-            if (hashInputRef.current?.value.trim()) textInputRef.current!.value = '';
-          }}
-        />
+    <section className="space-y-4 mt-0">
+      <h2 className="text-center text-2xl font-semibold tracking-tight">
+        Generate Mandala
+      </h2>
 
-        <textarea
-          ref={textInputRef}
-          placeholder="Or enter text to hash..."
-          rows={3}
-          onChange={() => {
-            if (textInputRef.current?.value.trim()) hashInputRef.current!.value = '';
-          }}
-        />
+      <input
+        ref={hashInputRef}
+        type="text"
+        placeholder="Enter 0x... custom hash (64 hex chars)"
+        onChange={() => {
+          if (hashInputRef.current?.value.trim()) {
+            textInputRef.current!.value = "";
+          }
+        }}
+        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+      />
 
-        <div className="hash-type-inline">
-          <span>Hash type:</span>
-          <label>
-            <input
-              type="radio"
-              name="hashBits"
-              value="256"
-              checked={hashBits === 256}
-              onChange={() => handleBitsChange(256)}
-            />
-            256-bit
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="hashBits"
-              value="160"
-              checked={hashBits === 160}
-              onChange={() => handleBitsChange(160)}
-            />
-            160-bit
-          </label>
-        </div>
+      <textarea
+        ref={textInputRef}
+        placeholder="Or enter text to hash..."
+        rows={3}
+        onChange={() => {
+          if (textInputRef.current?.value.trim()) {
+            hashInputRef.current!.value = "";
+          }
+        }}
+        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+      />
 
-        <div ref={effectiveStatusRef} id="status" className="status" />
-        <button onClick={handleGenerate} className="wide-button green-button">
-          Generate
-        </button>
+      <div className="flex justify-center items-center gap-4 text-sm text-center">    
+        <span className="whitespace-nowrap">Hash type:</span>
+        <label className="flex items-center gap-1">
+          <input
+            type="radio"
+            name="hashBits"
+            value="256"
+            checked={hashBits === 256}
+            onChange={() => handleBitsChange(256)}
+          />
+          256-bit
+        </label>
+        <label className="flex items-center gap-1">
+          <input
+            type="radio"
+            name="hashBits"
+            value="160"
+            checked={hashBits === 160}
+            onChange={() => handleBitsChange(160)}
+          />
+          160-bit
+        </label>
       </div>
-    </div>
+      <div
+          ref={effectiveStatusRef}
+          id="status"
+          className="break-words text-center flex-wrap text-sm text-muted-foreground min-h-[1.25rem]"
+      />
+
+      <Button
+        onClick={onGenerate}
+        className="w-full py-7 text-base font-semibold bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+      >
+        Generate Mandala
+      </Button>
+    </section>
   );
 }
 

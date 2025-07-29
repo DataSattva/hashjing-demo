@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LBT8NYF4P7"></script>
     <script>
@@ -12,8 +13,17 @@
         cookie_flags: 'SameSite=None;Secure', // optional sec
       });
     </script>
-    
-    <meta charset="UTF-8" />
+
+    <script>
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>    
 
     <!-- Favicon and icons -->
     <link rel="icon" href="/favicon.ico" />
@@ -28,11 +38,7 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="HashJing demo" />
 
-    <title>HashJing Demo</title>
-    <link
-      rel="stylesheet"
-      href="https://datasattva.github.io/hashjing-res/main.css"
-    />
+    <title>HashJing Generate</title>
     
   </head>
   <body>

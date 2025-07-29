@@ -1,9 +1,11 @@
 // src/components/FeaturesSection.tsx
 // Displays Balanced & Passages traits with rarity and shows the raw source hash.
 
-import { isBalanced, countPassages } from '../utils/featureAnalysis';
-import { getRarityStars } from '../utils/rarity';
-import type { HashBits } from '../utils/featureAnalysis';
+import { isBalanced, countPassages } from '../utils/featureAnalysis'
+import { getRarityStars } from '../utils/rarity'
+import type { HashBits } from '../utils/featureAnalysis'
+import { InfoTooltip } from "@/components/InfoTooltip"
+
 
 interface Props {
   hex: string;
@@ -32,34 +34,73 @@ export default function FeaturesSection({ hex, bits }: Props) {
     : 'Continuous black‑bit paths lead from the inner core to the edge, forming clear “exits”. These passages are isolated by white barriers preventing cross‑travel.';
 
   return (
-    <section id="features">
-      <h2 className="section-title">Features of Order</h2>
+    <section className="space-y-4 mt-10">
+      <h2 className="text-center text-2xl font-semibold tracking-tight">
+        Features of Order
+      </h2>
+  
+      <ul className="space-y-2 leading-relaxed">
+        <li>
+          <strong>Balanced:</strong> {balancedVal}
+          {balancedStars && (
+            <span>
+              {" "}
+              | Rarity:{" "} 
+              <span className="text-2xl font-mono text-yellow-500">{balancedStars}</span>
+              
+              <InfoTooltip>
+                Stars indicate the rarity of the feature across all possible hashes.
+                <br />
+                <a
+                  href="https://github.com/DataSattva/hashjing-demo"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline text-blue-600"
+                >
+                  View rarity chart →
+                </a>
+              </InfoTooltip>
 
-      <div id="features-content" className="controls">
-        <ul>
-          <li>
-            <strong>Balanced:</strong> {balancedVal}
-            {balancedStars && (
-              <span> | Rarity: <span className="rarity">{balancedStars}</span></span>
-            )}
-            <br />
-            {balancedDesc}
-          </li>
+            </span>
+          )}
+          <br />
+          <span className="text-muted-foreground">{balancedDesc}</span>
+        </li>
+  
+        <li>
+          <strong>Passages:</strong> {passages}
+          {passagesStars && (
+            <span>
+              {" "}
+              | Rarity:{" "}
+              <span className="text-2xl font-mono text-yellow-500">{passagesStars}</span>
 
-          <li>
-            <strong>Passages:</strong> {passages}
-            {passagesStars && (
-              <span> | Rarity: <span className="rarity">{passagesStars}</span></span>
-            )}
-            <br />
-            {passageDesc}
-          </li>
-
-          <li>
-            <strong>Source hash:</strong> {hex}
-          </li>
-        </ul>
-      </div>
+              <InfoTooltip>
+                Stars indicate the rarity of the feature across all possible hashes.
+                <br />
+                <a
+                  href="https://github.com/DataSattva/hashjing-demo"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline text-blue-600"
+                >
+                  View rarity chart →
+                </a>
+              </InfoTooltip>
+              
+            </span>
+          )}
+          <br />
+          <span className="text-muted-foreground">{passageDesc}</span>
+        </li>
+  
+        <li>
+          <strong>Source hash:</strong>
+          <div className="break-words font-mono text-sm text-foreground mt-1">
+            {hex}
+          </div>
+        </li>
+      </ul>
     </section>
-  );
+  );  
 }
