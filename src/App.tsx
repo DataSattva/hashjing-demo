@@ -68,15 +68,16 @@ function App() {
   
       <main className="mx-auto max-w-screen-md px-4 space-y-8">
         <div id="download-buttons" className="flex justify-center gap-4">
-        <button onClick={handleDownloadSVG}
-            className="text-sm border …">
-          Download SVG
-        </button>
-        <button onClick={handleDownloadPNG}
-            className="text-sm border …">
-          Download PNG
-        </button>
+          <button onClick={handleDownloadSVG}
+              className="text-sm border border-gray-300 px-3 py-1 rounded hover:border-gray-500 transition cursor-pointer">
+            Download SVG
+          </button>
+          <button onClick={handleDownloadPNG}
+              className="text-sm border border-gray-300 px-3 py-1 rounded hover:border-gray-500 transition cursor-pointer">
+            Download PNG
+          </button>
         </div>
+       
         <FeaturesSection hex={currentHex} bits={hashBits} />
         <MandalaControls
           svgRef={svgRef}
