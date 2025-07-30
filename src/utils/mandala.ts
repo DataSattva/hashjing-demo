@@ -1,5 +1,4 @@
-// src/utils/mandala.ts – fixed build errors (no base_hash import, proper string literal)
-
+// src/utils/mandala.ts 
 import type { RefObject } from 'react'
 
 /* ------------------------------------------------------------------
@@ -168,51 +167,54 @@ function polarToCartesian(cx: number, cy: number, r: number, angle: number) {
   return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) }
 }
 
-export function downloadSVG() {
-  const svg = document.querySelector('#svg-container svg')
-  if (!svg) return
+/* ─────────── Download helpers ─────────── */
+// If filename not supplied → fallback to default
+export function downloadSVG(filename = 'hashjing-mandala') {
+  const svg = document.querySelector('#svg-container svg');
+  if (!svg) return;
 
-  const source = new XMLSerializer().serializeToString(svg)
-  const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
+  const source = new XMLSerializer().serializeToString(svg);
+  const blob   = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+  const url    = URL.createObjectURL(blob);
 
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'hashjing-mandala.svg'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${filename}.svg`;          // ← dynamic name
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
-export function downloadPNG() {
-  const svgElement = document.querySelector('#svg-container svg') as SVGSVGElement
-  if (!svgElement) return
+export function downloadPNG(filename = 'hashjing-mandala') {
+  const svgElement = document.querySelector('#svg-container svg') as SVGSVGElement;
+  if (!svgElement) return;
 
-  const serializer = new XMLSerializer()
-  const svgString = serializer.serializeToString(svgElement)
-  const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' })
-  const url = URL.createObjectURL(svgBlob)
+  const serializer = new XMLSerializer();
+  const svgString  = serializer.serializeToString(svgElement);
+  const svgBlob    = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+  const url        = URL.createObjectURL(svgBlob);
 
-  const canvasSize = 1024
-  const canvas = document.createElement('canvas')
-  canvas.width = canvasSize
-  canvas.height = canvasSize
-  const ctx = canvas.getContext('2d')!
+  const canvasSize = 1024;
+  const canvas = document.createElement('canvas');
+  canvas.width  = canvasSize;
+  canvas.height = canvasSize;
+  const ctx = canvas.getContext('2d')!;
 
-  const img = new Image()
+  const img = new Image();
   img.onload = () => {
-    ctx.clearRect(0, 0, canvasSize, canvasSize)
-    ctx.drawImage(img, 0, 0, canvasSize, canvasSize)
-    URL.revokeObjectURL(url)
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    ctx.drawImage(img, 0, 0, canvasSize, canvasSize);
+    URL.revokeObjectURL(url);
 
-    const a = document.createElement('a')
-    a.download = 'hashjing-mandala.png'
-    a.href = canvas.toDataURL('image/png')
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-  }
-  img.crossOrigin = 'anonymous'
-  img.src = url
+    const a = document.createElement('a');
+    a.download = `${filename}.png`;        // ← dynamic name
+    a.href = canvas.toDataURL('image/png');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+  img.crossOrigin = 'anonymous';
+  img.src = url;
 }
+

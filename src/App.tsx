@@ -1,6 +1,10 @@
 // src/App.tsx
 import { useEffect, useRef, useState } from 'react';
-import { generate, downloadSVG, downloadPNG } from './utils/mandala';
+import {
+  generate,
+  downloadSVG as saveSVG,
+  downloadPNG as savePNG,
+} from './utils/mandala';
 import { ContactBlock } from './components/ContactBlock';
 import { MandalaControls } from './components/MandalaControls';
 import AboutSection from './components/AboutSection';
@@ -25,7 +29,16 @@ function App() {
       statusRef,
       onHex: setCurrentHex,
     })
-  }  
+  };
+  const handleDownloadSVG = () => {
+    const name = (currentHex || 'hashjing-mandala').replace(/^0x/, '');
+    saveSVG(name);
+  };
+  
+  const handleDownloadPNG = () => {
+    const name = (currentHex || 'hashjing-mandala').replace(/^0x/, '');
+    savePNG(name);
+  };  
 
   useResponsiveSvg(svgRef);
 
@@ -55,20 +68,16 @@ function App() {
   
       <main className="mx-auto max-w-screen-md px-4 space-y-8">
         <div id="download-buttons" className="flex justify-center gap-4">
-          <button
-            onClick={downloadSVG}
-            className="text-sm border border-gray-300 px-3 py-1 rounded hover:border-gray-500 transition cursor-pointer "
-          >
-            Download SVG
-          </button>
-          <button
-            onClick={downloadPNG}
-            className="text-sm border border-gray-300 px-3 py-1 rounded hover:border-gray-500 transition cursor-pointer "
-          >
-            Download PNG
-          </button>
+        <button onClick={handleDownloadSVG}
+            className="text-sm border …">
+          Download SVG
+        </button>
+        <button onClick={handleDownloadPNG}
+            className="text-sm border …">
+          Download PNG
+        </button>
         </div>
-  
+        <FeaturesSection hex={currentHex} bits={hashBits} />
         <MandalaControls
           svgRef={svgRef}
           hashBits={hashBits}
@@ -79,7 +88,6 @@ function App() {
           textInputRef={textInputRef}
           onGenerate={handleGenerate}
         />
-        <FeaturesSection hex={currentHex} bits={hashBits} />
         <IncludesSection />
         <AboutSection />
         <ContactBlock />
