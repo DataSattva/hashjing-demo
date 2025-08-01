@@ -56,7 +56,7 @@ function App() {
       <div
         className="sticky top-0 z-10 w-full py-3 text-center text-3xl font-bold bg-background border-b border-gray-300"
       >
-        HashJing Generate
+        HashJing Generator
       </div>
       <div
         id="svg-container"

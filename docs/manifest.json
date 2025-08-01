@@ -1,6 +1,6 @@
 {
-  "short_name": "HJ Generate",
-  "name": "HashJing Generate App",
+  "short_name": "HJ Generator",
+  "name": "HashJing Generator App",
   "icons": [
     {
       "src": "web-app-manifest-192x192.png",
