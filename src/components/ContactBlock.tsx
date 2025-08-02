@@ -20,7 +20,7 @@ export const ContactBlock = () => {
         <br></br>
         For a detailed list of HashJing contacts and resources, see the page{" "}
         <a
-          href="https://datasattva.github.io/hashjing-res/"
+          href="https://hashjing.github.io/resources/"
           target="_blank"
           rel="noreferrer"
           className="text-blue-400 underline hover:text-blue-600"
