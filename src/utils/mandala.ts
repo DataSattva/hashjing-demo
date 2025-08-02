@@ -117,7 +117,6 @@ export function drawMandala(
   const bgRect = `<rect x="0" y="0" width="${canvasSize}" height="${canvasSize}" fill="black"/>`;
 
   const paths: string[] = [];
-  const overlays: string[] = [];
   const highlightedSectors = new Set<number>();
 
   for (let i = 0; i < sectors; i++) {
@@ -144,7 +143,7 @@ export function drawMandala(
       [angle1, angle2].forEach(angle => {
         const inner = polarToCartesian(cx, cy, baseRadius, angle);
         const outer = polarToCartesian(cx, cy, baseRadius + radiusStep * rings, angle);
-        lineOverlays.push(`<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" stroke="red" stroke-width="3" />`);
+        lineOverlays.push(`<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" stroke="red" stroke-width="2" />`);
       });
     });
   
