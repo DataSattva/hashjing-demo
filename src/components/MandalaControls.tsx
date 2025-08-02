@@ -18,6 +18,7 @@ interface Props {
   hashInputRef: RefObject<HTMLInputElement>;
   textInputRef: RefObject<HTMLTextAreaElement>;
   onGenerate: () => void;
+  showSymmetries: boolean;
 }
 
 
@@ -30,6 +31,7 @@ export function MandalaControls({
   hashInputRef,
   textInputRef,
   onGenerate,
+  showSymmetries,
 }: Props) {
 
   // create local fallback if parent did not supply one
@@ -44,6 +46,7 @@ export function MandalaControls({
       textInputRef,
       statusRef: effectiveStatusRef,
       onHex: setCurrentHex,
+      showSymmetries,
     });
 
   const handleBitsChange = (bits: 256 | 160) => {

@@ -4,6 +4,7 @@ import {
   generate,
   downloadSVG as saveSVG,
   downloadPNG as savePNG,
+  drawMandala
 } from './utils/mandala';
 import { ContactBlock } from './components/ContactBlock';
 import { MandalaControls } from './components/MandalaControls';
@@ -28,7 +29,8 @@ function App() {
       textInputRef,
       statusRef,
       onHex: setCurrentHex,
-    })
+      showSymmetries,
+    });
   };
   const handleDownloadSVG = () => {
     const name = (currentHex || 'hashjing-mandala').replace(/^0x/, '');
@@ -40,16 +42,25 @@ function App() {
     savePNG(name);
   };  
 
+  const [showSymmetries, setShowSymmetries] = useState(false);
+
   useResponsiveSvg(svgRef);
 
   useEffect(() => {
     generate({
       svgRef,
-      bits: hashBits,  
-      statusRef,   
+      bits: hashBits,
+      statusRef,
       onHex: setCurrentHex,
+      showSymmetries, 
     });
-  }, []);
+  }, []); 
+
+  useEffect(() => {
+    if (currentHex) {
+      drawMandala(currentHex, hashBits, svgRef, showSymmetries);
+    }
+  }, [showSymmetries]);
   
   return (
     <>
@@ -78,7 +89,12 @@ function App() {
           </button>
         </div>
        
-        <FeaturesSection hex={currentHex} bits={hashBits} />
+        <FeaturesSection
+          hex={currentHex}
+          bits={hashBits}
+          showSymmetries={showSymmetries}
+          setShowSymmetries={setShowSymmetries}
+        />
         <MandalaControls
           svgRef={svgRef}
           hashBits={hashBits}
@@ -88,6 +104,7 @@ function App() {
           hashInputRef={hashInputRef}
           textInputRef={textInputRef}
           onGenerate={handleGenerate}
+          showSymmetries={showSymmetries}
         />
         <IncludesSection />
         <AboutSection />
