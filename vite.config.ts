@@ -17,6 +17,6 @@ export default defineConfig({
     outDir: 'docs',  
     emptyOutDir: true,
   },
-  base: '/hashjing-demo/',
+  base: '/generator/',
   server: { port: 5175 },
 });
