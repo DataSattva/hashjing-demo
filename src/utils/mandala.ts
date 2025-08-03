@@ -131,30 +131,49 @@ export function drawMandala(
   const sectorOverlays: string[] = [];
   const lineOverlays: string[] = [];
 
+  let maxLen = 0;                         
+  const maxSectors = new Set<number>(); 
+
   if (showSymmetries) {
-    findSymmetries(hex, bits).forEach(sym => {
-      for (let i = sym.start; i < sym.start + sym.length; i++) {
-        highlightedSectors.add(i);
-      }
+    const syms = findSymmetries(hex, bits);
   
-      const angle1 = sym.start * angleStep - Math.PI / 2;
-      const angle2 = (sym.start + sym.length) * angleStep - Math.PI / 2;
+    /* determine the longest rank and remember its sectors */
+    let maxLen = 0;
+    const maxSectors = new Set<number>();
+    const highlightedSectors = new Set<number>();
   
-      [angle1, angle2].forEach(angle => {
+    syms.forEach(sym => {
+      maxLen = Math.max(maxLen, sym.length);
+      for (let i = sym.start; i < sym.start + sym.length; i++) highlightedSectors.add(i);
+    });
+    syms.forEach(sym => {
+      if (sym.length === maxLen)
+        for (let i = sym.start; i < sym.start + sym.length; i++) maxSectors.add(i);
+  
+      const a1 = sym.start * angleStep - Math.PI / 2;
+      const a2 = (sym.start + sym.length) * angleStep - Math.PI / 2;
+  
+      [a1, a2].forEach(angle => {
         const inner = polarToCartesian(cx, cy, baseRadius, angle);
         const outer = polarToCartesian(cx, cy, baseRadius + radiusStep * rings, angle);
-        lineOverlays.push(`<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" stroke="red" stroke-width="2" />`);
+        lineOverlays.push(
+          `<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" stroke="red" stroke-width="2" />`,
+        );
       });
     });
   
+    /* paint overlays: red for max-rank, grey for the rest */
     for (let i = 0; i < sectors; i++) {
       if (!highlightedSectors.has(i)) continue;
+      const fill  = maxSectors.has(i) ? 'red'   : 'black';
+      const opac  = maxSectors.has(i) ? '0.32'  : '0.32';
+  
       for (let j = 0; j < rings; j++) {
         const path = generateSectorPath(cx, cy, i, j, angleStep, radiusStep, baseRadius);
-        sectorOverlays.push(`<path d="${path}" fill="black" opacity="0.32" />`);
+        sectorOverlays.push(`<path d="${path}" fill="${fill}" opacity="${opac}" />`);
       }
     }
-  }
+  }  
 
   const lineLength = bits === 160 ? 10 : 16;
   const square = hex.slice(2).match(new RegExp(`.{1,${lineLength}}`, 'g')) || [];

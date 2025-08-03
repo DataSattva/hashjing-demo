@@ -9,7 +9,7 @@ export const ContactBlock = () => {
       <p className="text-base leading-relaxed">
         Questions, ideas or bug reports?{" "}
         <a
-          href="https://github.com/DataSattva/hashjing/discussions"
+          href="https://github.com/DataSattva/hashcanon/discussions"
           target="_blank"
           rel="noreferrer"
           className="text-blue-400 underline hover:text-blue-600"
@@ -18,9 +18,9 @@ export const ContactBlock = () => {
         </a>{" "}
         and let’s talk!
         <br></br>
-        For a detailed list of HashJing contacts and resources, see the page{" "}
+        For a detailed list of HashCanon contacts and resources, see the page{" "}
         <a
-          href="https://hashjing.github.io/resources/"
+          href="https://hashcanon.github.io/resources/"
           target="_blank"
           rel="noreferrer"
           className="text-blue-400 underline hover:text-blue-600"

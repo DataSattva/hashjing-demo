@@ -4,12 +4,12 @@ export default function AboutSection() {
   return (
     <main className="space-y-4 mt-10">
       <h2 className="text-center text-2xl font-semibold tracking-tight">
-        About HashJing Project
+        About HashCanon Project
       </h2>
 
       <div className="space-y-4 text-base leading-relaxed">
         <p>
-          <strong>HashJing</strong> is a philosophical and aesthetic
+          <strong>HashCanon</strong> is a philosophical and aesthetic
           experiment at the intersection of generative art, cryptography, and East Asian symbolism.
           The name fuses “hash” (a unique digital fingerprint) with the Chinese character{" "}
           <strong>經</strong> <em>jīng</em> — “canonic text”. In other

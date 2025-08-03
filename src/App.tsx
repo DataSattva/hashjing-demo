@@ -33,12 +33,12 @@ function App() {
     });
   };
   const handleDownloadSVG = () => {
-    const name = (currentHex || 'hashjing-mandala').replace(/^0x/, '');
+    const name = (currentHex || 'hashcanon-mandala').replace(/^0x/, '');
     saveSVG(name);
   };
   
   const handleDownloadPNG = () => {
-    const name = (currentHex || 'hashjing-mandala').replace(/^0x/, '');
+    const name = (currentHex || 'hashcanon-mandala').replace(/^0x/, '');
     savePNG(name);
   };  
 
@@ -67,7 +67,7 @@ function App() {
       <div
         className="sticky top-0 z-10 w-full py-3 text-center text-3xl font-bold bg-background border-b border-gray-300"
       >
-        HashJing Generator
+        HashCanon Generator
       </div>
       <div
         id="svg-container"
