@@ -113,7 +113,7 @@ export function drawMandala(
   const bitsArray = hexToBitArray(hex);
 
   const metadata = `<metadata><!-- omitted for brevity --></metadata>`;
-  const signature = `<text x="${canvasSize - 10}" y="${canvasSize - 10}" font-size="18" fill="white" text-anchor="end" font-family="monospace" opacity="0.5">https://github.com/HashJing</text>`;
+  const signature = `<text x="${canvasSize - 10}" y="${canvasSize - 10}" font-size="18" fill="white" text-anchor="end" font-family="monospace" opacity="0.5">HashCanon.github.io</text>`;
   const bgRect = `<rect x="0" y="0" width="${canvasSize}" height="${canvasSize}" fill="black"/>`;
 
   const paths: string[] = [];
